@@ -2,10 +2,12 @@ import { Navbar } from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { ProjectCard } from "@/components/ProjectCard";
 import { ArrowRight, Package, Award, Users } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-architecture.jpg";
 
 const Index = () => {
+  const navigate = useNavigate();
+  
   const featuredProjects = [
     {
       title: "Museo de Arte Contemporáneo",
@@ -49,7 +51,7 @@ const Index = () => {
         <div className="container mx-auto px-4 py-24 md:py-32 relative z-10">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
-              El GitHub para Arquitectos
+              El GitArch para Arquitectos
             </h1>
             <p className="text-xl text-white/90 mb-8 leading-relaxed">
               Comparte tus proyectos, obtén POAPs en blockchain y conecta con la comunidad arquitectónica global.
@@ -61,7 +63,7 @@ const Index = () => {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20">
+              <Button size="lg" variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20" onClick={() => navigate("/auth")}>
                 Subir Proyecto
               </Button>
             </div>
@@ -133,7 +135,7 @@ const Index = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
               <Package className="h-5 w-5 text-primary" />
-              <span className="font-semibold">ArchiRepo</span>
+              <span className="font-semibold">GitArch</span>
             </div>
             <p className="text-sm text-muted-foreground">
               Powered by Polkadot & Astar Network
