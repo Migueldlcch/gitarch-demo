@@ -14,7 +14,122 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      poaps: {
+        Row: {
+          contract_address: string | null
+          created_at: string
+          id: string
+          metadata_uri: string | null
+          project_id: string
+          token_id: string | null
+          transaction_hash: string | null
+          user_id: string
+        }
+        Insert: {
+          contract_address?: string | null
+          created_at?: string
+          id?: string
+          metadata_uri?: string | null
+          project_id: string
+          token_id?: string | null
+          transaction_hash?: string | null
+          user_id: string
+        }
+        Update: {
+          contract_address?: string | null
+          created_at?: string
+          id?: string
+          metadata_uri?: string | null
+          project_id?: string
+          token_id?: string | null
+          transaction_hash?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "poaps_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string
+          id: string
+          university: string | null
+          updated_at: string
+          username: string
+          wallet_address: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          id: string
+          university?: string | null
+          updated_at?: string
+          username: string
+          wallet_address?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          id?: string
+          university?: string | null
+          updated_at?: string
+          username?: string
+          wallet_address?: string | null
+        }
+        Relationships: []
+      }
+      projects: {
+        Row: {
+          category: string
+          created_at: string
+          description: string | null
+          id: string
+          image_urls: string[]
+          poap_generated: boolean | null
+          tags: string[] | null
+          title: string
+          university: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_urls?: string[]
+          poap_generated?: boolean | null
+          tags?: string[] | null
+          title: string
+          university?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_urls?: string[]
+          poap_generated?: boolean | null
+          tags?: string[] | null
+          title?: string
+          university?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
