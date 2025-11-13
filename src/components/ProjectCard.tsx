@@ -1,9 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Award } from "lucide-react";
 
 interface ProjectCardProps {
+  id?: string;
   title: string;
   author: string;
   category: string;
@@ -12,9 +14,20 @@ interface ProjectCardProps {
   authorAvatar?: string;
 }
 
-export const ProjectCard = ({ title, author, category, poaps, imageUrl, authorAvatar }: ProjectCardProps) => {
+export const ProjectCard = ({ id, title, author, category, poaps, imageUrl, authorAvatar }: ProjectCardProps) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (id) {
+      navigate(`/project/${id}`);
+    }
+  };
+
   return (
-    <Card className="group overflow-hidden border-border hover:shadow-elegant transition-all duration-300 cursor-pointer">
+    <Card 
+      className="group overflow-hidden border-border hover:shadow-elegant transition-all duration-300 cursor-pointer"
+      onClick={handleClick}
+    >
       <div className="aspect-video overflow-hidden bg-muted">
         <img 
           src={imageUrl} 
