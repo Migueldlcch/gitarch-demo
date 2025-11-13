@@ -28,8 +28,12 @@ interface Project {
 interface Poap {
   id: string;
   created_at: string;
+  token_id: string;
+  transaction_hash: string;
   projects: {
     title: string;
+    image_urls: string[];
+    category: string;
   };
 }
 
@@ -62,11 +66,22 @@ const Profile = () => {
 
         setProjects(projectsData || []);
 
-        const { data: poapsData } = await supabase
+        const { data: poapsData, error: poapsError } = await supabase
           .from('poaps')
-          .select('*, projects(title)')
+          .select(`
+            *,
+            projects (
+              title,
+              image_urls,
+              category
+            )
+          `)
           .eq('user_id', profileData.id)
           .order('created_at', { ascending: false });
+
+        if (poapsError) {
+          console.error('Error fetching POAPs:', poapsError);
+        }
 
         setPoaps(poapsData || []);
       } catch (error) {
@@ -163,6 +178,7 @@ const Profile = () => {
                 {projects.map((project) => (
                   <ProjectCard
                     key={project.id}
+                    id={project.id}
                     title={project.title}
                     author={profile.username}
                     category={project.category}
@@ -183,13 +199,31 @@ const Profile = () => {
             {poaps.length > 0 ? (
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {poaps.map((poap) => (
-                  <Card key={poap.id}>
-                    <CardContent className="pt-6">
-                      <Award className="h-12 w-12 text-primary mb-4" />
-                      <h3 className="font-semibold mb-2">{poap.projects.title}</h3>
-                      <p className="text-sm text-muted-foreground">
-                        {new Date(poap.created_at).toLocaleDateString()}
-                      </p>
+                  <Card key={poap.id} className="overflow-hidden">
+                    <div className="relative h-48">
+                      <img 
+                        src={poap.projects?.image_urls?.[0] || "https://images.unsplash.com/photo-1511818966892-d7d671e672a2"}
+                        alt={poap.projects?.title || "POAP"}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute top-2 right-2">
+                        <Badge className="bg-primary/90 backdrop-blur">
+                          <Award className="h-3 w-3 mr-1" />
+                          POAP
+                        </Badge>
+                      </div>
+                    </div>
+                    <CardContent className="p-4">
+                      <h3 className="font-semibold mb-2">{poap.projects?.title || "Sin título"}</h3>
+                      <div className="space-y-1 text-xs text-muted-foreground">
+                        <p>Token: {poap.token_id?.slice(0, 10)}...</p>
+                        <p>{new Date(poap.created_at).toLocaleDateString('es-MX')}</p>
+                        {poap.projects?.category && (
+                          <Badge variant="secondary" className="text-xs">
+                            {poap.projects.category}
+                          </Badge>
+                        )}
+                      </div>
                     </CardContent>
                   </Card>
                 ))}

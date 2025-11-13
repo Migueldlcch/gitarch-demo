@@ -87,7 +87,8 @@ const UploadProject = () => {
         imageUrls.push(publicUrl);
       }
 
-      const { error: insertError } = await supabase
+      // Insert project data
+      const { data: projectData, error: insertError } = await supabase
         .from('projects')
         .insert({
           user_id: session.user.id,
@@ -97,7 +98,9 @@ const UploadProject = () => {
           university,
           tags: tags.split(',').map(t => t.trim()).filter(Boolean),
           image_urls: imageUrls
-        });
+        })
+        .select()
+        .single();
 
       if (insertError) throw insertError;
 
@@ -105,6 +108,34 @@ const UploadProject = () => {
         title: "¡Proyecto publicado!",
         description: "Tu proyecto ha sido subido exitosamente",
       });
+
+      // Auto-mintear POAP para el creador
+      try {
+        const { error: mintError } = await supabase.functions.invoke('mint-poap', {
+          body: {
+            projectId: projectData.id,
+            userId: session.user.id
+          }
+        });
+
+        if (!mintError) {
+          toast({
+            title: "¡POAP generado!",
+            description: "Tu POAP ha sido minteado automáticamente",
+          });
+        }
+      } catch (mintError) {
+        console.error('Error auto-minting POAP:', mintError);
+      }
+
+      // Reset form
+      setTitle("");
+      setDescription("");
+      setCategory("");
+      setUniversity("");
+      setTags("");
+      setFiles([]);
+      setPreviews([]);
 
       navigate("/dashboard");
     } catch (error: any) {

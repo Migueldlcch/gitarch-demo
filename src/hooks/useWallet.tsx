@@ -1,12 +1,41 @@
 import { useState, useEffect } from 'react';
 import { web3Accounts, web3Enable, web3FromAddress } from '@polkadot/extension-dapp';
 import type { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
+import { ApiPromise, WsProvider } from '@polkadot/api';
 import { toast } from '@/hooks/use-toast';
+
+const SHIBUYA_WSS = 'wss://shibuya.public.blastapi.io';
 
 export const useWallet = () => {
   const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>([]);
   const [selectedAccount, setSelectedAccount] = useState<InjectedAccountWithMeta | null>(null);
   const [isConnecting, setIsConnecting] = useState(false);
+  const [api, setApi] = useState<ApiPromise | null>(null);
+  const [isApiReady, setIsApiReady] = useState(false);
+
+  // Conectar a Shibuya testnet
+  useEffect(() => {
+    const connectToShibuya = async () => {
+      try {
+        const provider = new WsProvider(SHIBUYA_WSS);
+        const api = await ApiPromise.create({ provider });
+        await api.isReady;
+        setApi(api);
+        setIsApiReady(true);
+        console.log('Connected to Shibuya testnet');
+      } catch (error) {
+        console.error('Error connecting to Shibuya:', error);
+      }
+    };
+
+    connectToShibuya();
+
+    return () => {
+      if (api) {
+        api.disconnect();
+      }
+    };
+  }, []);
 
   const connectWallet = async () => {
     setIsConnecting(true);
@@ -94,6 +123,8 @@ export const useWallet = () => {
     connectWallet,
     disconnectWallet,
     signMessage,
-    isConnected: !!selectedAccount
+    isConnected: !!selectedAccount,
+    api,
+    isApiReady
   };
 };

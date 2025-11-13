@@ -135,6 +135,7 @@ const ProjectDetail = () => {
   }
 
   const isOwner = session?.user?.id === project.user_id;
+  const userHasPoap = project.poaps?.some((poap: any) => poap.user_id === session?.user?.id);
 
   return (
     <div className="min-h-screen bg-background">
@@ -249,7 +250,7 @@ const ProjectDetail = () => {
                   POAPs generados
                 </p>
 
-                {!isOwner && (
+                {!userHasPoap && session?.user && (
                   <Button 
                     onClick={handleMintPoap}
                     disabled={minting}
@@ -257,6 +258,12 @@ const ProjectDetail = () => {
                   >
                     {minting ? "Generando..." : "Generar mi POAP"}
                   </Button>
+                )}
+                
+                {userHasPoap && (
+                  <p className="text-sm text-muted-foreground text-center">
+                    ✓ Ya tienes el POAP de este proyecto
+                  </p>
                 )}
 
                 {project.poaps && project.poaps.length > 0 && (

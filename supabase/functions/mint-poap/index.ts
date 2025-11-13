@@ -47,7 +47,7 @@ serve(async (req) => {
       throw new Error('Usuario no tiene wallet conectada');
     }
 
-    console.log('Preparing to mint POAP on Shibuya...');
+    console.log('Preparing to mint POAP on Shibuya testnet...');
 
     // Crear metadata para el POAP
     const metadata = {
@@ -61,17 +61,15 @@ serve(async (req) => {
       ]
     };
 
-    // Guardar metadata en IPFS o similar (por ahora usaremos una URL temporal)
-    // En producción, deberías subir esto a IPFS
+    // En producción, subir metadata a IPFS
     const metadataUri = `data:application/json;base64,${btoa(JSON.stringify(metadata))}`;
 
-    // Simular transacción de minteo
-    // En un contrato real, aquí llamarías al método mint del contrato PSP34
-    const contractAddress = '0x0000000000000000000000000000000000000000'; // Placeholder
+    // Simular minteo en Shibuya (deployar contrato real para producción)
+    const contractAddress = 'YourContractAddress'; // Reemplazar después de deployar contrato
     const txHash = `0x${Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join('')}`;
     const tokenId = Date.now().toString();
 
-    console.log('Transaction simulated:', txHash);
+    console.log('POAP simulated on Shibuya:', txHash);
 
     // Guardar POAP en la base de datos
     const { error: insertError } = await supabaseClient
