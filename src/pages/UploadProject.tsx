@@ -11,11 +11,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { toast } from "@/hooks/use-toast";
 import { Upload, X } from "lucide-react";
 import type { Session } from "@supabase/supabase-js";
+import { usePolkadot } from "@/hooks/usePolkadot";
 
 const categories = ["Renders", "Planos", "Maquetas", "Secciones", "Fotos"];
 
 const UploadProject = () => {
   const navigate = useNavigate();
+  const { selectedAccount, isApiReady, mintPoap, contractAddress } = usePolkadot();
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
@@ -109,7 +111,19 @@ const UploadProject = () => {
         description: "Tu proyecto ha sido subido exitosamente",
       });
 
-      // Auto-mintear POAP para el creador
+      // Auto-mintear POAP on-chain (si wallet y contrato están disponibles)
+      try {
+        const metadataUri = imageUrls[0] ?? '';
+        if (selectedAccount && isApiReady && contractAddress) {
+          await mintPoap(projectData.id, selectedAccount.address, metadataUri);
+        } else {
+          console.warn('Wallet o contrato no disponible, saltando mint on-chain');
+        }
+      } catch (chainErr) {
+        console.error('Error minteando on-chain:', chainErr);
+      }
+
+      // Registrar POAP en backend para visibilidad inmediata
       try {
         const { error: mintError } = await supabase.functions.invoke('mint-poap', {
           body: {
@@ -120,12 +134,12 @@ const UploadProject = () => {
 
         if (!mintError) {
           toast({
-            title: "¡POAP generado!",
-            description: "Tu POAP ha sido minteado automáticamente",
+            title: '¡POAP generado!',
+            description: 'Tu POAP ha sido minteado y registrado',
           });
         }
       } catch (mintError) {
-        console.error('Error auto-minting POAP:', mintError);
+        console.error('Error registrando POAP en backend:', mintError);
       }
 
       // Reset form

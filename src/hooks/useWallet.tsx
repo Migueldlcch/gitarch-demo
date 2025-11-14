@@ -4,7 +4,7 @@ import type { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { toast } from '@/hooks/use-toast';
 
-const SHIBUYA_WSS = 'wss://shibuya.public.blastapi.io';
+import { SHIBUYA_WSS } from '@/config/blockchain';
 
 export const useWallet = () => {
   const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>([]);
@@ -63,11 +63,16 @@ export const useWallet = () => {
       }
 
       setAccounts(allAccounts);
-      setSelectedAccount(allAccounts[0]);
+      // Restaurar cuenta previa si existe en localStorage
+      const saved = localStorage.getItem('polkadot:selected');
+      const found = saved ? allAccounts.find((a) => a.address === saved) : null;
+      const selected = found || allAccounts[0];
+      setSelectedAccount(selected);
+      localStorage.setItem('polkadot:selected', selected.address);
       
       toast({
-        title: "Wallet conectada",
-        description: `Conectado como ${allAccounts[0].meta.name}`,
+        title: 'Wallet conectada',
+        description: `Conectado como ${selected.meta.name}`,
       });
     } catch (error) {
       console.error('Error connecting wallet:', error);
@@ -84,9 +89,10 @@ export const useWallet = () => {
   const disconnectWallet = () => {
     setAccounts([]);
     setSelectedAccount(null);
+    localStorage.removeItem('polkadot:selected');
     toast({
-      title: "Wallet desconectada",
-      description: "Has cerrado sesión exitosamente",
+      title: 'Wallet desconectada',
+      description: 'Has cerrado sesión exitosamente',
     });
   };
 
