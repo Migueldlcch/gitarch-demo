@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Package, User, Search } from "lucide-react";
 import { WalletConnect } from "./WalletConnect";
+import { NetworkIndicator } from "./NetworkIndicator";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { Session } from "@supabase/supabase-js";
@@ -50,6 +51,8 @@ export const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-3">
+          <NetworkIndicator />
+          
           <Button variant="ghost" size="icon" className="hidden md:flex">
             <Search className="h-5 w-5" />
           </Button>
