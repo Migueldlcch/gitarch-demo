@@ -7,7 +7,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Award, MapPin } from "lucide-react";
+import { Award, MapPin, RefreshCcw } from "lucide-react";
+import { usePolkadot } from "@/hooks/usePolkadot";
 
 interface Profile {
   username: string;
@@ -43,6 +44,10 @@ const Profile = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [poaps, setPoaps] = useState<Poap[]>([]);
   const [loading, setLoading] = useState(true);
+  const { isApiReady, selectedAccount, contractAddress, getUserPoaps, getPoapMetadata } = usePolkadot();
+  const [chainPoaps, setChainPoaps] = useState<{ tokenId: string; metadata_uri?: string }[]>([]);
+  const [chainLoading, setChainLoading] = useState(false);
+  const [chainError, setChainError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchProfileData = async () => {
