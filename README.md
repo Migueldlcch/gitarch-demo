@@ -1,73 +1,62 @@
-# Welcome to your Lovable project
+# GitArch Web3 - Blockchain Architecture Analyzer 🚀
 
-## Project info
+## Hackathon Project - Next Generation Code Analysis
 
-**URL**: https://lovable.dev/projects/259a854d-3707-4090-a317-d99b8fb0b6a3
+### 🏗️ What is GitArch Web3?
+GitArch Web3 is a **blockchain-powered code architecture analysis tool** that visualizes and analyzes smart contract dependencies using Rust/ink! and Web3 technologies.
 
-## How can I edit this code?
+### 🔥 Core Features
+- **Smart Contract Architecture Mapping**
+- **Real-time Dependency Visualization** 
+- **Blockchain Code Analysis**
+- **Interactive Web3 Dashboard**
 
-There are several ways of editing your application.
+### 🛠️ Tech Stack
+\`\`\`rust
+// Blockchain
+Rust, ink!, Substrate, Polkadot
 
-**Use Lovable**
+// Frontend
+React, TypeScript, Tailwind CSS
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/259a854d-3707-4090-a317-d99b8fb0b6a3) and start prompting.
+// Backend
+Node.js, Express, Web3.js
+\`\`\`
 
-Changes made via Lovable will be committed automatically to this repo.
+### 🚀 Quick Start
+\`\`\`bash
+# Clone repository
+git clone https://github.com/Migueldlcch/gitarch-demo.git
+cd gitarch-demo
 
-**Use your preferred IDE**
+# Build Rust contracts
+cargo build --release
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+# Install frontend dependencies
+npm install
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development
 npm run dev
-```
+\`\`\`
 
-**Edit a file directly in GitHub**
+---
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+**Built with ❤️ for the Hackathon** 🏆
 
-**Use GitHub Codespaces**
+*This is a custom blockchain application built with Rust/ink! and Web3 technologies.*
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
 
-## What technologies are used for this project?
+## 🔗 Links
+- **Live Demo**: [Coming Soon]
+- **Documentation**: [In Progress]
+- **Hackathon Submission**: [Ready]
 
-This project is built with:
+## 📞 Contact
+- **GitHub**: [Migueldlcch](https://github.com/Migueldlcch)
+- **Project**: [GitArch Web3](https://github.com/Migueldlcch/gitarch-demo)
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/259a854d-3707-4090-a317-d99b8fb0b6a3) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+---
+![Rust](https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white)
+![Blockchain](https://img.shields.io/badge/Blockchain-Web3-blue?style=for-the-badge)
+![ink](https://img.shields.io/badge/ink!-Polkadot-E6007A?style=for-the-badge)
+![Hackathon](https://img.shields.io/badge/Hackathon-Project-green?style=for-the-badge)
